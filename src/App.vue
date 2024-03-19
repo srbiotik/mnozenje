@@ -2,6 +2,8 @@
 import { ref } from 'vue'
 
 const gameRunning = ref(false)
+const gameType = ref('division')
+const gameTypes = ref(['multiplication', 'division'])
 const multiplicand = ref(null)
 const multiplier = ref(null)
 const result = ref(null)
@@ -72,20 +74,28 @@ function shuffleArray(array) {
 
 function setAnswerChoices() {
   const answers = [result.value]
-  answers.push((multiplicand.value - 1) * multiplier.value)
-  answers.push((multiplicand.value - 1) * (multiplier.value - 1))
-  answers.push(multiplicand.value * (multiplier.value - 1))
+  if (gameType.value == 'multiplication') {
+    answers.push((multiplicand.value - 1) * multiplier.value)
+    answers.push((multiplicand.value - 1) * (multiplier.value - 1))
+    answers.push(multiplicand.value * (multiplier.value - 1))
+  } else {
+    answers.push((multiplicand.value - 1))
+    answers.push((multiplicand.value + 1))
+    answers.push((multiplicand.value + 2))
+  }
   choices.value = shuffleArray(answers)
 }
 
-function setMultiplicationPairs() {
+function setNumberPairs() {
   if (low > high) {
     throw new Error("Low end of range must be less than or equal to high end.");
   }
   const [m, M] = getMultiplicationPair(low, high)
-  multiplicand.value = m
+  const r = m * M
+
+  multiplicand.value = gameType.value == 'multiplication' ? m : r
   multiplier.value = M
-  result.value = m * M;
+  result.value = gameType.value == 'multiplication' ? m * M : m;
 }
 
 function getMultiplicationPair() {
@@ -130,7 +140,7 @@ function setQuestion() {
   }
   counter.value++
   graded.value = false
-  setMultiplicationPairs()
+  setNumberPairs()
   setAnswerChoices()
 }
 
@@ -169,8 +179,8 @@ function changeGameState() {
     </div>
     <div class="main">
       <div v-if="grade !== null && multiplicand === null && multiplier === null" class="question">{{ grade }}</div>
-      <div v-if="multiplicand !== null && multiplier !== null && !showResult" class="question">{{ `${multiplicand} *
-              ${multiplier}` }}
+      <div v-if="multiplicand !== null && multiplier !== null && !showResult" class="question">{{ `${multiplicand} ${gameType == 'multiplication' ? '*' : ':'}
+        ${multiplier}` }}
       </div>
       <div v-if="showResult" class="question" :style="{ color: 'red' }">{{ mainText }}</div>
     </div>
