@@ -1,6 +1,10 @@
-# mnozenje
+# Mnozenje
 
-This template should help get you started developing with Vue 3 in Vite.
+Da bi ovo radilo treba uraditi par instalacija na lokalnoj masini:
+- Git https://git-scm.com/book/en/v2/Getting-Started-Installing-Git
+- [Npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
+
+Zatim prati ova uputstva od ispod
 
 ## Recommended IDE Setup
 
