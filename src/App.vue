@@ -79,9 +79,9 @@ function setAnswerChoices() {
     answers.push((multiplicand.value - 1) * (multiplier.value - 1))
     answers.push(multiplicand.value * (multiplier.value - 1))
   } else {
-    answers.push((multiplicand.value - 1))
-    answers.push((multiplicand.value + 1))
-    answers.push((multiplicand.value + 2))
+    answers.push((result.value - 1))
+    answers.push((result.value + 1))
+    answers.push((result.value + 2))
   }
   choices.value = shuffleArray(answers)
 }
